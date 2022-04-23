@@ -27,6 +27,12 @@ class TestBinarySearch(unittest.TestCase):
         search = 1
         self.assertIsNone(binary_search(values, search))
 
+    def test_empty_list(self):
+        """Test empty list on input."""
+        values = []
+        search = 1
+        self.assertIsNone(binary_search(values, search))
+
 
 if __name__ == '__main__':
     unittest.main()
