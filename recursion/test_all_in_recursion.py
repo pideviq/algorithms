@@ -30,6 +30,9 @@ class TestRecursion(unittest.TestCase):
         with self.subTest(msg='Non-int elements in the list'):
             with self.assertRaises(ValueError):
                 numbers_sum([34, '6x', -9, 'a'])
+        with self.subTest(msg='Test elements of float type'):
+            with self.assertRaises(ValueError):
+                numbers_sum([3.14, 9.99])
 
     def test_cont(self):
         """Test count function.
