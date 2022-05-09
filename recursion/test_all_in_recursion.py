@@ -1,6 +1,7 @@
 import unittest
 from recursion.numbers_sum import numbers_sum
 from recursion.count import count
+from recursion.mx import mx
 
 
 class TestRecursion(unittest.TestCase):
@@ -11,6 +12,7 @@ class TestRecursion(unittest.TestCase):
             [11],
             [3, 56, -7, 9],
         ]
+        self.mix = [12, 3.14, '', 'abc', '45d', None, False]
 
     def test_numbers_sum(self):
         """Test numbers_sum function.
@@ -39,10 +41,25 @@ class TestRecursion(unittest.TestCase):
         for array in self.arrays:
             with self.subTest(msg='Correct input', array=array):
                 self.assertEqual(count(array), len(array))
-        mix = [12, 3.14, '', 'abc', '45d', None, False]
         with self.subTest(
-                msg='List with elements of different types', mix=mix):
-            self.assertEqual(count(mix), len(mix))
+                msg='List with elements of different types', mix=self.mix):
+            self.assertEqual(count(self.mix), len(self.mix))
+
+    def test_mx(self):
+        """Test mx function.
+
+        Write a recursive function to find the maximum number in a list.
+        """
+        with self.subTest(msg='Test empty list'):
+            with self.assertRaises(IndexError):
+                mx([])
+        for array in self.arrays:
+            with self.subTest(msg='Test correct input', array=array):
+                self.assertEqual(mx(array), max(array))
+        with self.subTest(
+                msg='List with elements of different types'):
+            with self.assertRaises(ValueError):
+                mx(self.mix)
 
 
 if __name__ == '__main__':
