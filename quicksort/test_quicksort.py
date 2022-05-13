@@ -5,12 +5,13 @@ import json
 from quicksort.quicksort import quicksort
 
 
-class MyTestCase(unittest.TestCase):
+class TestQuicksort(unittest.TestCase):
     """Test Quicksort algorithm."""
 
     def setUp(self) -> None:
         """Load test data."""
-        data_file_full_path = os.path.join(os.path.dirname(__file__), 'data.json')
+        data_file_full_path = os.path.join(os.path.dirname(__file__),
+                                           'data.json')
         with open(data_file_full_path) as test_cases_file:
             self.test_cases = json.load(test_cases_file)
         return None
@@ -25,6 +26,11 @@ class MyTestCase(unittest.TestCase):
         for case in self.test_cases.values():
             with self.subTest(case=case):
                 self.assertEqual(quicksort(case['input']), case['output'])
+
+    def test_duplicated_values(self):
+        """Test array with duplicated values."""
+        array = [9, 3, 6, 365, 3, 75, 6, 81, 3, 3]
+        self.assertEqual(quicksort(array), sorted(array))
 
     def test_incorrect_input(self):
         """Test handling illegal values on input."""
