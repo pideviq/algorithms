@@ -23,8 +23,7 @@ class TestRecursion(unittest.TestCase):
         You should do this with a recursive function.
         """
         with self.subTest(msg='Test empty list'):
-            with self.assertRaises(IndexError):
-                numbers_sum([])
+            self.assertEqual(numbers_sum([]), 0)
         for array in self.arrays:
             with self.subTest(msg='Correct input', array=array):
                 self.assertEqual(numbers_sum(array), sum(array))
@@ -35,7 +34,7 @@ class TestRecursion(unittest.TestCase):
             with self.assertRaises(ValueError):
                 numbers_sum([3.14, 9.99])
 
-    def test_cont(self):
+    def test_count(self):
         """Test count function.
 
         Write a recursive function to count the number of items in a list.
