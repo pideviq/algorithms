@@ -4,8 +4,11 @@ from __future__ import annotations
 class Dijkstra:
     """Dijkstra's algorithm implementation."""
 
-    def __init__(self, graph: dict) -> None:
+    def __init__(self, graph: dict, start: str = 'start',
+                 finish: str = 'finish') -> None:
         self.graph = graph
+        self.start = start
+        self.finish = finish
         self.costs = {}
         self.parents = {}
         self.processed = []
@@ -13,15 +16,15 @@ class Dijkstra:
         infinity = float('inf')
         # Set initial costs of edges of a graph and parents of nodes
         for node in self.graph:
-            if node == 'start':
+            if node == start:
                 # Skip start node
                 continue
             self.costs[node] = infinity
             self.parents[node] = None
         # Set cost and parent of start neighbors
-        for node, weight in self.graph['start'].items():
+        for node, weight in self.graph[start].items():
             self.costs[node] = weight
-            self.parents[node] = 'start'
+            self.parents[node] = start
 
     def calc_cheapest_path(self) -> int:
         """Calculate the cheapest path from start to finish."""
@@ -37,7 +40,7 @@ class Dijkstra:
                         self.costs[neighbor] = new_cost
                         self.parents[neighbor] = node
                 self.processed.append(node)
-            self.cheapest_path = self.costs['finish']
+            self.cheapest_path = self.costs[self.finish]
         return self.cheapest_path
 
     def _get_cheapest_node(self) -> str | None:

@@ -124,6 +124,32 @@ class TestDijkstra(unittest.TestCase):
         with self.assertRaises(ValueError):
             dijkstra.calc_cheapest_path()
 
+    def test_bfs_shortest_path(self):
+        """Test search of the shortest path."""
+        graph = {
+            'cab': {
+                'cat': 1,
+                'car': 1,
+            },
+            'car': {
+                'bar': 1,
+            },
+            'cat': {
+                'mat': 1,
+                'bat': 1,
+            },
+            'bar': {
+                'bat': 1,
+            },
+            'mat': {
+                'bat': 1,
+            },
+            'bat': {},
+        }
+        dijkstra = Dijkstra(graph, 'cab', 'bat')
+        shortest_path = dijkstra.calc_cheapest_path()
+        self.assertEqual(shortest_path, 2)
+
 
 if __name__ == '__main__':
     unittest.main()
