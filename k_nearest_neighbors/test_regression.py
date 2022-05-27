@@ -1,6 +1,7 @@
 import unittest
 from math import sqrt, ceil
-from k_nearest_neighbors.regression import SmartBakery
+from k_nearest_neighbors.regression import SmartBakery,\
+    calc_pythagorean_distance
 
 
 class TestRegression(unittest.TestCase):
@@ -37,6 +38,9 @@ class TestRegression(unittest.TestCase):
         bakery = SmartBakery(self.sales_report, 4)
         loaves_to_make = bakery.make_sales_forecast(self.conditions)
         self.assertEqual(self.loaves_to_make, loaves_to_make)
+        loaves_to_make_fast = bakery.make_sales_forecast(self.conditions,
+                                                         boost=True)
+        self.assertEqual(self.loaves_to_make, loaves_to_make_fast)
 
     def test_forecast_for_exact_match(self) -> None:
         """Test forecast for the same conditions and k=1."""
@@ -54,6 +58,15 @@ class TestRegression(unittest.TestCase):
         bakery = SmartBakery(bad_report)
         with self.assertRaises(ValueError):
             bakery.make_sales_forecast((5, 1, 0))
+
+    def test_calc_pythagorean_distance(self):
+        """Test calculation of a distance between two points."""
+        point_a = (1, 1, 0)
+        point_b = (4, 1, 0)
+        self.assertEqual(0, calc_pythagorean_distance(point_a, point_a))
+        self.assertEqual(3, calc_pythagorean_distance(point_a, point_b))
+        self.assertEqual(9, calc_pythagorean_distance(point_a, point_b,
+                                                      boost=True))
 
 
 if __name__ == '__main__':

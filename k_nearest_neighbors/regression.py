@@ -12,6 +12,7 @@ you sell?
 """
 
 
+from __future__ import annotations
 from typing import List, Tuple, Dict
 from math import sqrt, ceil
 from statistics import fmean
@@ -26,6 +27,13 @@ Conditions = Tuple[int, int, int]
 DayResult = Tuple[Conditions, int]
 
 
+def calc_pythagorean_distance(point_a: Conditions, point_b: Conditions,
+                              boost: bool = False) -> int | float:
+    """Return a distance between two points counted by Pythagorean formula."""
+    total = sum((x-y) ** 2 for x, y in zip(point_a, point_b))
+    return total if boost else round(sqrt(total), 4)
+
+
 class SmartBakery:
     """A bakery, that uses KNN algorithm to predict sales."""
 
@@ -38,13 +46,12 @@ class SmartBakery:
         self.sales_report = sales_report
         self.k = ceil(sqrt(len(sales_report))) if k is None else k
 
-    def make_sales_forecast(self, conditions: Conditions) -> int:
+    def make_sales_forecast(self, conditions: Conditions,
+                            boost: bool = False) -> int:
         """Return optimal amount of loaves to make today."""
         try:
             distances = {
-                key: round(sqrt((day[0][0] - conditions[0]) ** 2
-                                + (day[0][1] - conditions[1]) ** 2
-                                + (day[0][2] - conditions[2]) ** 2), 4)
+                key: calc_pythagorean_distance(day[0], conditions, boost=boost)
                 for key, day in enumerate(self.sales_report)
             }
         except (ValueError, IndexError, TypeError):
