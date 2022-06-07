@@ -10,7 +10,7 @@ def binary_search(values: List[int], search) -> int | None:
     low = 0
     high = len(values) - 1
     while low <= high:
-        middle = (low + high) // 2
+        middle = low + (high - low)//2
         guess = values[middle]
         if guess == search:
             return middle
